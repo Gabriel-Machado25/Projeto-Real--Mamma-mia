@@ -1,0 +1,1342 @@
+/* ================================================
+   MAMMA MIA PIZZARIA v2 — Premium Dark Mode
+   Estética: Precision Dark · Italian Editorial
+   Filosofia: Software-grade UI com alma de pizzaria
+   Mobile First · CSS Custom Properties
+================================================ */
+
+
+/* ------------------------------------------------
+   1. VARIÁVEIS — O DNA visual do projeto
+------------------------------------------------ */
+:root {
+  /* Fundo em camadas — cria profundidade sem cor */
+  --bg-base:    #080808;
+  --bg-surface: #111111;
+  --bg-raised:  #161616;
+  --bg-overlay: #1c1c1c;
+
+  /* Bordas ultra-finas para elegância cirúrgica */
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong:  rgba(255,255,255,0.18);
+
+  /* Tipografia em escala */
+  --text-primary:   #f2efe9;   /* branco quente, não agride */
+  --text-secondary: #8b8680;
+  --text-muted:     #4a4744;
+
+  /* Acento: vermelho do logo, mas calibrado para tela */
+  --accent:         #d4341c;
+  --accent-bright:  #ff4426;
+  --accent-glow:    rgba(212, 52, 28, 0.20);
+  --accent-dim:     rgba(212, 52, 28, 0.08);
+
+  /* Dourado para toques premium */
+  --gold:       #c8962a;
+  --gold-dim:   rgba(200, 150, 42, 0.12);
+
+  /* Tipografia */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* Espaçamento em escala 8pt */
+  --s-1:  0.5rem;    /*  8px */
+  --s-2:  1rem;      /* 16px */
+  --s-3:  1.5rem;    /* 24px */
+  --s-4:  2rem;      /* 32px */
+  --s-6:  3rem;      /* 48px */
+  --s-8:  4rem;      /* 64px */
+  --s-12: 6rem;      /* 96px */
+  --s-16: 8rem;      /* 128px */
+
+  /* Raio de borda */
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-pill: 999px;
+
+  /* Sombras */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:  0 16px 60px rgba(0,0,0,0.7);
+  --shadow-glow: 0 0 40px var(--accent-glow);
+
+  /* Transições */
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast:    0.15s var(--ease);
+  --t-default: 0.25s var(--ease);
+  --t-slow:    0.5s var(--ease);
+}
+
+
+/* ------------------------------------------------
+   2. RESET CIRÚRGICO
+------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 300;
+  overflow-x: hidden;
+  /* Textura de ruído sutil no fundo */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+
+/* ------------------------------------------------
+   3. UTILITÁRIOS
+------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: var(--s-3);
+}
+
+/* Esconde conteúdo visualmente mas mantém para leitores de tela */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* Animação de entrada: elementos com [data-animate] começam invisíveis */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--t-slow), transform var(--t-slow);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay escalonado para grupos de elementos */
+[data-animate]:nth-child(2) { transition-delay: 0.1s; }
+[data-animate]:nth-child(3) { transition-delay: 0.2s; }
+[data-animate]:nth-child(4) { transition-delay: 0.3s; }
+[data-animate]:nth-child(5) { transition-delay: 0.4s; }
+
+
+/* ------------------------------------------------
+   4. CABEÇALHO COM GLASSMORPHISM
+   
+   Glassmorphism = vidro fosco.
+   Técnica: fundo semitransparente + backdrop-filter: blur
+   O conteúdo atrás do header fica desfocado.
+   Efeito: sensação de material de vidro premium.
+------------------------------------------------ */
+.site-header {
+  position: fixed;   /* gruda no topo mesmo ao scrollar */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  /* Estado inicial: totalmente transparente */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background var(--t-default), border-color var(--t-default), backdrop-filter var(--t-default);
+}
+
+/* Classe adicionada pelo JS quando o usuário scrolla */
+.site-header.scrolled {
+  /* backdrop-filter: blur → desfoca o que está atrás */
+  /* -webkit-backdrop-filter: prefixo para Safari */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(8, 8, 8, 0.80);
+  border-bottom-color: var(--border-subtle);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: var(--s-3);
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.header-logo__img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-default);
+}
+
+.header-logo__text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.header-nav__link {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  padding: 0.4em 0.8em;
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+
+.header-nav__link:hover {
+  color: var(--text-primary);
+  background: var(--border-subtle);
+}
+
+/* CTA no header: pequeno botão vermelho */
+.header-nav__link--cta {
+  background: var(--accent-dim);
+  border: 1px solid rgba(212, 52, 28, 0.25);
+  color: var(--accent-bright);
+  font-weight: 500;
+}
+
+.header-nav__link--cta:hover {
+  background: var(--accent-glow);
+  color: var(--accent-bright);
+}
+
+
+/* ------------------------------------------------
+   5. HERO
+------------------------------------------------ */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 64px; /* compensa o header fixo */
+  overflow: hidden;
+}
+
+/* Imagem de fundo */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('pizza-hero.jpg');
+  background-size: cover;
+  background-position: center 35%;
+  /* Zoom suave na entrada — sensação cinematográfica */
+  animation: heroZoom 12s var(--ease) forwards;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.00); }
+}
+
+/* Gradiente em camadas para legibilidade perfeita */
+.hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    /* vinheta superior (onde fica o header) */
+    linear-gradient(180deg, rgba(8,8,8,0.75) 0%, transparent 35%),
+    /* base forte para o texto */
+    linear-gradient(0deg, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.50) 50%, transparent 100%);
+}
+
+/* Textura de ruído sobre o hero */
+.hero__noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  padding: var(--s-8) var(--s-3);
+  text-align: center;
+}
+
+/* Eyebrow: indicador de status tipo "ao vivo" */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-pill);
+  padding: 0.4em 1em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: var(--s-4);
+}
+
+/* Ponto verde pulsante tipo "online" */
+.eyebrow-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.85); }
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 10vw, 6rem);
+  font-weight: 400;       /* DM Serif Display tem peso visual forte no 400 */
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--gold);
+  margin-bottom: var(--s-3);
+}
+
+/* Itálico = serifado elegante — contraste com o romano */
+.hero__title em {
+  font-style: italic;
+  color: white
+}
+
+.hero__desc {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--s-4);
+}
+
+.hero__desc strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-6);
+}
+
+/* Prova social: avatares + texto */
+.hero__social-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.proof-avatars {
+  display: flex;
+  font-size: 1.3rem;
+  filter: grayscale(0.3);
+}
+
+.proof-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.proof-text strong {
+  color: var(--text-primary);
+}
+
+/* Linha de scroll animada */
+.hero__scroll {
+  position: absolute;
+  bottom: var(--s-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  margin-inline: auto;
+  animation: scrollDrop 2s ease infinite;
+}
+
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+
+/* ------------------------------------------------
+   6. BOTÕES
+------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+
+  padding: 0.75em 1.5em;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+
+  transition: all var(--t-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho no hover: pseudo-elemento que desliza */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.4s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+.btn--primary:hover {
+  background: var(--accent-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--accent-glow), 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--border-subtle);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+
+/* ------------------------------------------------
+   7. SEÇÃO: STATS
+   Linha de números de impacto.
+------------------------------------------------ */
+.stats {
+  padding-block: var(--s-8);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.stats__grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--s-2) var(--s-4);
+}
+
+.stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-suffix {
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.3em;
+}
+
+/* Divisor vertical entre stats */
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border-subtle);
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------
+   8. LAYOUT DE SEÇÕES
+   Padrão compartilhado para consistência.
+------------------------------------------------ */
+.section-header {
+  text-align: center;
+  max-width: 560px;
+  margin-inline: auto;
+  margin-bottom: var(--s-8);
+}
+
+.section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-2);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--s-2);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.section-body {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+
+/* ------------------------------------------------
+   9. FEATURES / BENEFÍCIOS
+------------------------------------------------ */
+.features {
+  padding-block: var(--s-16);
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+
+.feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-4);
+
+  /* Transição de hover: borda e brilho de fundo */
+  transition: border-color var(--t-default), background var(--t-default), transform var(--t-default);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilho vermelho sutil no canto superior esquerdo ao hover */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: -40px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  opacity: 0;
+  transition: opacity var(--t-default);
+}
+
+.feature-card:hover {
+  border-color: var(--border-default);
+  background: var(--bg-raised);
+  transform: translateY(-3px);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--accent-dim);
+  border: 1px solid rgba(212, 52, 28, 0.15);
+  color: var(--accent-bright);
+  margin-bottom: var(--s-3);
+}
+
+.feature-card__title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--s-1);
+}
+
+.feature-card__body {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+
+/* ------------------------------------------------
+   10. SEÇÃO RODÍZIO
+   Layout assimétrico: texto + card de preço.
+------------------------------------------------ */
+.rodizio {
+  padding-block: var(--s-16);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.rodizio__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.rodizio__text .section-eyebrow {
+  text-align: left;
+}
+
+.rodizio__desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-block: var(--s-3);
+  line-height: 1.7;
+}
+
+.rodizio__desc strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.rodizio__list {
+  margin-bottom: var(--s-4);
+}
+
+.rodizio__list li {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  padding-block: 0.4em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rodizio__list li:last-child {
+  border-bottom: none;
+}
+
+/* Card de preço estilo SaaS pricing card */
+.rodizio__card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xl);
+  padding: var(--s-6);
+  position: relative;
+  /* Brilho vermelho no topo do card */
+  box-shadow: 0 0 60px rgba(212, 52, 28, 0.06);
+}
+
+.rodizio__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.rodizio__card-badge {
+  display: inline-block;
+  background: var(--accent-dim);
+  border: 1px solid rgba(212, 52, 28, 0.25);
+  border-radius: var(--r-pill);
+  color: var(--accent-bright);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3em 0.8em;
+  margin-bottom: var(--s-3);
+}
+
+.rodizio__card-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--s-1);
+}
+
+.rodizio__card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  margin-bottom: var(--s-1);
+}
+
+.price-currency {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.price-value {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.rodizio__card-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: var(--s-3);
+  font-style: italic;
+}
+
+.rodizio__card-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin-bottom: var(--s-3);
+}
+
+.rodizio__card-features {
+  margin-bottom: var(--s-4);
+}
+
+.rodizio__card-features li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding-block: 0.35em;
+}
+
+
+/* ------------------------------------------------
+   11. FORMULÁRIO DE RESERVA
+------------------------------------------------ */
+.reservation {
+  padding-block: var(--s-16);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.res-form {
+  max-width: 560px;
+  margin-inline: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-xl);
+  padding: var(--s-6);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Barra de progresso das etapas */
+.form-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.form-progress__track {
+  flex: 1;
+  height: 3px;
+  background: var(--border-subtle);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.form-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  border-radius: var(--r-pill);
+  width: 33.33%;
+  transition: width 0.5s var(--ease);
+}
+
+.form-progress__label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Cada etapa do formulário */
+.form-step {
+  border: none;
+}
+
+.form-step__legend {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-primary);
+  margin-bottom: var(--s-4);
+  display: block;
+  width: 100%;
+}
+
+/* Etapas escondidas */
+.form-step--hidden {
+  display: none;
+}
+
+/* Campo individual */
+.form-field {
+  margin-bottom: var(--s-3);
+}
+
+/* Linha com 2 campos lado a lado */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5em;
+}
+
+.form-label--opt {
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Input / Select / Textarea — estilo unificado */
+.form-input {
+  display: block;
+  width: 100%;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 300;
+  padding: 0.85em 1em;
+
+  /* Transição suave de borda e glow ao focar */
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* :focus — borda brilhante ao focar (exigido nas instruções) */
+.form-input:focus {
+  outline: none;
+  background: var(--bg-overlay);
+  border-color: rgba(212, 52, 28, 0.5);
+  /* ring duplo: borda fina + glow suave */
+  box-shadow:
+    0 0 0 3px rgba(212, 52, 28, 0.10),
+    0 0 16px rgba(212, 52, 28, 0.08);
+}
+
+/* Estado de erro */
+.form-input.has-error {
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.form-error {
+  display: block;
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 0.4em;
+  min-height: 1em;
+}
+
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234a4744' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1em center;
+  padding-right: 2.5em;
+}
+
+.form-select option {
+  background: var(--bg-raised);
+  color: var(--text-primary);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Picker de quantidade customizado */
+.quantity-picker {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  width: fit-content;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.quantity-picker:focus-within {
+  border-color: rgba(212, 52, 28, 0.5);
+  box-shadow: 0 0 0 3px rgba(212, 52, 28, 0.10);
+}
+
+.qty-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0.6em 1em;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.qty-btn:hover {
+  background: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.qty-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  min-width: 2.5em;
+  text-align: center;
+  padding: 0.6em 0;
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+}
+
+/* Resumo da reserva antes de confirmar */
+.reservation-summary {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+
+.summary-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--s-2);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding-block: 0.35em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-key {
+  color: var(--text-secondary);
+}
+
+.summary-val {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Checkbox estilizado */
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  cursor: pointer;
+  margin-bottom: var(--s-2);
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--bg-raised);
+  transition: all var(--t-fast);
+  position: relative;
+  margin-top: 2px;
+}
+
+/* Checkmark: pseudo-elemento que aparece quando checked */
+.checkbox-input:checked + .checkbox-custom {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checkbox-input:checked + .checkbox-custom::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 5px;
+  width: 5px; height: 8px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.checkbox-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Botões de navegação entre etapas */
+.form-nav {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+.form-nav .btn {
+  flex: 1;
+}
+
+/* Estado de loading no botão de submit */
+.btn--loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn--loading::after {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 0.5em;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Estilos de data e calendar picker */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+
+/* ------------------------------------------------
+   12. MODAL DE SUCESSO
+------------------------------------------------ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-3);
+
+  opacity: 0;
+  transition: opacity var(--t-default);
+}
+
+/* JS remove o 'hidden' e adiciona 'is-open' */
+.modal-overlay.is-open {
+  opacity: 1;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xl);
+  padding: var(--s-8);
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--t-slow);
+}
+
+.modal-overlay.is-open .modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #22c55e;
+  font-size: 1.8rem;
+  margin-inline: auto;
+  margin-bottom: var(--s-3);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: var(--s-2);
+}
+
+.modal-body {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--s-4);
+}
+
+
+/* ------------------------------------------------
+   13. RODAPÉ
+------------------------------------------------ */
+.site-footer {
+  padding-block: var(--s-12);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--s-4);
+}
+
+.footer__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: var(--s-2);
+}
+
+.footer__tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.footer__address {
+  font-style: normal;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.footer__link {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: color var(--t-fast);
+  width: fit-content;
+}
+
+.footer__link:hover {
+  color: var(--text-primary);
+}
+
+.footer__bottom {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+
+/* ================================================
+   14. MEDIA QUERIES — TABLET E DESKTOP
+   Tudo acima é mobile. Aqui expandimos.
+================================================ */
+
+@media (min-width: 640px) {
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .res-form {
+    padding: var(--s-8);
+  }
+}
+
+@media (min-width: 900px) {
+  .rodizio__inner {
+    grid-template-columns: 1fr 380px;
+    gap: var(--s-12);
+  }
+
+  .footer__inner {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+
+  .header-nav__link:not(.header-nav__link--cta) {
+    display: flex; /* sempre visíveis em desktop */
+  }
+}
+
+/* Esconde links de nav em mobile para não poluir */
+@media (max-width: 640px) {
+  .header-nav__link:not(.header-nav__link--cta) {
+    display: none;
+  }
+
+  .stats__grid {
+    gap: 0;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .stat-item {
+    width: 50%;
+    padding: var(--s-2);
+  }
+
+  .stats__grid {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}

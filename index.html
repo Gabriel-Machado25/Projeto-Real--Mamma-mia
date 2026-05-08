@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reserve sua mesa no Rodízio Mamma Mia. Experiência premium em pizzas artesanais em Tabuleiro do Norte." />
+  <link rel="shortcut icon" href="472283209_1137018414606834_3071318877695649676_n.jpg" type="image/x-icon">
+  <title>Mamma Mia Pizzaria — Reserve sua Mesa</title>
+
+  <!-- DM Sans: corpo moderno e geométrico -->
+  <!-- DM Serif Display: título com personalidade editorial -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =============================================
+    HEADER FIXO COM GLASSMORPHISM
+    Fica sempre visível enquanto o usuário scrolla.
+    O JS adiciona a classe .scrolled para ativar
+    o blur quando não está no topo da página.
+  ============================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#inicio" class="header-logo" aria-label="Mamma Mia Pizzaria — Início">
+        <img src="472283209_1137018414606834_3071318877695649676_n.jpg" alt="Logo Mamma Mia" class="header-logo__img" />
+        <span class="header-logo__text">Mamma Mia</span>
+      </a>
+
+      <nav class="header-nav" aria-label="Navegação principal">
+        <a href="#vantagens" class="header-nav__link">Por que reservar</a>
+        <a href="#rodizio" class="header-nav__link">Rodízio</a>
+        <a href="#reserva" class="header-nav__link header-nav__link--cta">
+          Reservar mesa
+        </a>
+      </nav>
+    </div>
+  </header>
+
+<section class="hero" id="inicio">
+
+    <!-- Camada de ruído para profundidade visual -->
+    <div class="hero__noise" aria-hidden="true"></div>
+
+    <!-- Imagem de fundo com overlay gradiente -->
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__bg-overlay"></div>
+    </div>
+
+    <div class="hero__content">
+
+      <!-- Eyebrow: credencial de autoridade -->
+      <div class="hero__eyebrow" data-animate>
+        <span class="eyebrow-dot"></span>
+        Referência em qualidade no Vale do Jaguaribe
+      </div>
+
+      <!-- H1: a headline mais importante -->
+      <h1 class="hero__title" data-animate>
+        <em>Rodízio</em><br> Mamma Mia<br />
+        <em>sua mesa,</em><br />
+        seu momento.
+      </h1>
+
+      <p class="hero__desc" data-animate>
+        Pizzas artesanais premium todos os dias das <strong>17h30 às 22h30</strong>.<br />
+        Reserve em menos de 2 minutos, sem ligações.
+      </p>
+
+      <div class="hero__actions" data-animate>
+        <a href="#reserva" class="btn btn--primary">
+          Garantir minha mesa
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#rodizio" class="btn btn--ghost">Ver o cardápio</a>
+      </div>
+
+      <!-- Prova social compacta -->
+      <div class="hero__social-proof" data-animate>
+        <div class="proof-avatars" aria-hidden="true">
+          <span class="proof-avatar">🍕</span>
+          <span class="proof-avatar">🍕</span>
+          <span class="proof-avatar">🍕</span>
+        </div>
+        <p class="proof-text">
+          <strong>+23 mil</strong> seguidores no Instagram · Verificado ✓
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Indicador de scroll animado -->
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+    HERO — Impacto máximo em 3 segundos
+  ============================================= -->
+  
+  <!-- =============================================
+    SEÇÃO: NÚMEROS / ESTATÍSTICAS
+    Linha horizontal de stats — impacto rápido
+  ============================================= -->
+
+  <!-- =============================================
+    SEÇÃO: POR QUE RESERVAR
+  ============================================= -->
+  <section class="features" id="vantagens">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-eyebrow">Por que reservar</p>
+        <h2 class="section-title">
+          Menos burocrático.<br />Mais dinâmico.
+        </h2>
+        <p class="section-body">
+          Chegar e encontrar sua mesa pronta muda completamente o jantar.
+        </p>
+      </div>
+
+      <div class="features__grid">
+
+        <article class="feature-card" data-animate>
+          <div class="feature-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Mesa garantida</h3>
+          <p class="feature-card__body">
+            Sua mesa está reservada antes de você sair de casa. Sem fila, sem "tem lugar não".
+          </p>
+        </article>
+
+        <article class="feature-card" data-animate>
+          <div class="feature-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 6v6l4 2M22 12a10 10 0 11-20 0 10 10 0 0120 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">2 minutos para reservar</h3>
+          <p class="feature-card__body">
+            Preencha o formulário, receba confirmação no WhatsApp. Sem ligação, sem vai-e-vem.
+          </p>
+        </article>
+
+        <article class="feature-card" data-animate>
+          <div class="feature-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Experiência premium</h3>
+          <p class="feature-card__body">
+            Reconhecida como referência no Vale. Ingredientes selecionados, atendimento de primeira.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+    SEÇÃO: RODÍZIO (DESTAQUE DO PRODUTO)
+  ============================================= -->
+  <section class="rodizio" id="rodizio">
+    <div class="container">
+
+      <div class="rodizio__inner">
+
+        <div class="rodizio__text">
+          <p class="section-eyebrow">O Destaque</p>
+          <h2 class="section-title" style="text-align:left;">
+            Rodízio toda<br /><em>Quarta-feira</em>
+          </h2>
+          <p class="rodizio__desc">
+            Todos os dias: <strong>17h30 às 22h30</strong><br />
+            Rodízio especial às <strong>Quartas-feiras</strong>
+          </p>
+
+          <ul class="rodizio__list" role="list">
+            <li>🔥 Sabores exclusivos da casa</li>
+            <li>🧀 Ingredientes selecionados</li>
+            <li>🍕 Pizzas artesanais ilimitadas</li>
+            <li>👨‍👩‍👧 Espaço Kids disponível</li>
+          </ul>
+
+          <a href="#reserva" class="btn btn--primary">
+            Reservar para o Rodízio
+          </a>
+        </div>
+
+        <!-- Card de preço / destaque visual -->
+        <div class="rodizio__card">
+          <div class="rodizio__card-badge">Mais popular</div>
+          <p class="rodizio__card-label">Rodízio por pessoa</p>
+          <div class="rodizio__card-price">
+            <span class="price-currency">R$</span>
+            <span class="price-value">90</span>
+          </div>
+          <p class="rodizio__card-note">
+            "Você pagou R$60 no rodízio e olha isso" 🔥
+          </p>
+          <div class="rodizio__card-divider"></div>
+          <ul class="rodizio__card-features" role="list">
+            <li>✓ Pizzas ilimitadas</li>
+            <li>✓ Variedade de sabores</li>
+            <li>✓ Mesa reservada</li>
+            <li>✓ Confirmação via WhatsApp</li>
+          </ul>
+          <a href="#reserva" class="btn btn--primary btn--full">
+            Garantir vaga
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+    SEÇÃO: FORMULÁRIO DE RESERVA
+    O coração funcional da página.
+  ============================================= -->
+  <section class="reservation" id="reserva">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-eyebrow">Reserva online</p>
+        <h2 class="section-title">Reserve sua mesa agora</h2>
+        <p class="section-body">
+          Preencha os dados. Você receberá confirmação no WhatsApp em instantes.
+        </p>
+      </div>
+
+      <form class="res-form" id="reservation-form" novalidate>
+
+        <!-- Barra de progresso (etapas) -->
+        <div class="form-progress" aria-label="Progresso do formulário">
+          <div class="form-progress__track">
+            <div class="form-progress__fill" id="progress-fill"></div>
+          </div>
+          <span class="form-progress__label" id="progress-label">Etapa 1 de 3</span>
+        </div>
+
+        <!-- ETAPA 1: Dados pessoais -->
+        <fieldset class="form-step" id="step-1" data-step="1">
+          <legend class="form-step__legend">Seus dados</legend>
+
+          <div class="form-field">
+            <label for="nome" class="form-label">Nome completo</label>
+            <input type="text" id="nome" name="nome" class="form-input"
+              placeholder="Ex: Maria Oliveira" autocomplete="name" required />
+            <span class="form-error" id="erro-nome"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="telefone" class="form-label">WhatsApp</label>
+            <input type="tel" id="telefone" name="telefone" class="form-input"
+              placeholder="(88) 9 9999-9999" autocomplete="tel" required />
+            <span class="form-error" id="erro-telefone"></span>
+          </div>
+
+          <div class="form-field">
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 2: Detalhes da reserva -->
+        <fieldset class="form-step form-step--hidden" id="step-2" data-step="2">
+          <legend class="form-step__legend">Detalhes da reserva</legend>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="data" class="form-label">Data <span class="form-label--opt">(apenas quartas-feiras)</span></label>
+              <input type="date" id="data" name="data" class="form-input" required />
+              <span class="form-error" id="erro-data"></span>
+            </div>
+            <div class="form-field">
+              <label for="horario" class="form-label">Horário</label>
+              <select id="horario" name="horario" class="form-input form-select" required>
+                <option value="" disabled selected>Selecione</option>
+                <option value="17:30">17h30</option>
+                <option value="18:00">18h00</option>
+                <option value="18:30">18h30</option>
+                <option value="19:00">19h00</option>
+                <option value="19:30">19h30</option>
+                <option value="20:00">20h00</option>
+                <option value="20:30">20h30</option>
+                <option value="21:00">21h00</option>
+                <option value="21:30">21h30</option>
+              </select>
+              <span class="form-error" id="erro-horario"></span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="pessoas" class="form-label">Número de pessoas</label>
+            <!-- Seletor visual de quantidade — mais bonito que um select -->
+            <div class="quantity-picker" role="group" aria-label="Número de pessoas">
+              <button type="button" class="qty-btn" id="qty-minus" aria-label="Diminuir">−</button>
+              <span class="qty-value" id="qty-display">2</span>
+              <button type="button" class="qty-btn" id="qty-plus" aria-label="Aumentar">+</button>
+              <input type="hidden" id="pessoas" name="pessoas" value="2" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 3: Confirmação -->
+        <fieldset class="form-step form-step--hidden" id="step-3" data-step="3">
+          <legend class="form-step__legend">Finalizar</legend>
+
+          <div class="form-field">
+            <label for="obs" class="form-label">
+              Observações <span class="form-label--opt">(opcional)</span>
+            </label>
+            <textarea id="obs" name="obs" class="form-input form-textarea" rows="3"
+              placeholder="Aniversário, cadeirante, alergia..."></textarea>
+          </div>
+
+          <!-- Card de resumo gerado pelo JS -->
+          <div class="reservation-summary" id="reservation-summary" aria-live="polite">
+            <!-- Preenchido pelo JS antes de mostrar esta etapa -->
+          </div>
+
+          <label class="form-checkbox" for="aceite">
+            <input type="checkbox" id="aceite" name="aceite" class="checkbox-input" required />
+            <span class="checkbox-custom" aria-hidden="true"></span>
+            <span class="checkbox-label">
+              Confirmo que os dados estão corretos e quero receber a confirmação por WhatsApp.
+            </span>
+          </label>
+          <span class="form-error" id="erro-aceite"></span>
+        </fieldset>
+
+        <!-- Botões de navegação entre etapas -->
+        <div class="form-nav">
+          <button type="button" class="btn btn--ghost" id="btn-back" style="display:none;">
+            ← Voltar
+          </button>
+          <button type="button" class="btn btn--primary" id="btn-next">
+            Continuar →
+          </button>
+          <button type="submit" class="btn btn--primary btn--submit" id="btn-submit" style="display:none;">
+            Confirmar reserva via WhatsApp 🍕
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+    MODAL DE SUCESSO
+    Aparece após o envio com animação.
+  ============================================= -->
+  <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true"
+    aria-label="Reserva confirmada" hidden>
+    <div class="modal-box">
+      <div class="modal-icon" aria-hidden="true">✓</div>
+      <h2 class="modal-title">Reserva enviada!</h2>
+      <p class="modal-body">
+        Sua reserva foi enviada para o WhatsApp da Mamma Mia.<br />
+        Em instantes você receberá a confirmação.
+      </p>
+      <button class="btn btn--primary" id="modal-close">Fechar</button>
+    </div>
+  </div>
+
+
+  <!-- =============================================
+    RODAPÉ
+  ============================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__inner">
+
+        <div class="footer__brand">
+          <img src="472283209_1137018414606834_3071318877695649676_n.jpg" alt="Mamma Mia Pizzaria" class="footer__logo" />
+          <p class="footer__tagline">Sabores exclusivos · Viva essa experiência</p>
+        </div>
+
+        <div class="footer__info">
+          <address class="footer__address">
+            Tv. Luís Chaves, 360<br />
+            Tabuleiro do Norte – CE<br />
+            17h30 às 22h30 · Todos os dias
+          </address>
+        </div>
+
+        <div class="footer__links">
+          <a href="https://instagram.com/mamma.miapizzaria"
+            target="_blank" rel="noopener noreferrer"
+            class="footer__link">Instagram</a>
+          <a href="https://linktr.ee/mamma.miapizzaria"
+            target="_blank" rel="noopener noreferrer"
+            class="footer__link">Linktree</a>
+          <a href="#reserva" class="footer__link">Reservar mesa</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2025 Mamma Mia Pizzaria · Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
